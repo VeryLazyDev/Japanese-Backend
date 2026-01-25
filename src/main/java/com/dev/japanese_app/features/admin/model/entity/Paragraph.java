@@ -40,11 +40,7 @@ public class Paragraph {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "paragraph_id")
-    List<Question> questionsList;
-
-    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id")
-    List<Answer> answerList;
+    private List<Question> questionsList;
 
     @PrePersist
     protected void onCreate(){

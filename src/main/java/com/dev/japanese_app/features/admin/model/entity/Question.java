@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "questions")
@@ -25,6 +27,10 @@ public class Question {
 
     @Column(nullable = false)
     private LocalDateTime updated_datetime;
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "question_id")
+    private Set<Answer> answerList;
 
     @PrePersist
     protected void onCreate(){
