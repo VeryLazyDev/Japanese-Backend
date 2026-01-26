@@ -1,0 +1,53 @@
+package com.dev.japanese_app.features.admin.model.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Table(name = "questions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Question {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String question;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_paragraph_id", referencedColumnName = "id")
+    private Paragraph paragraph;
+
+    @Column(nullable = false,updatable = false)
+    private LocalDateTime created_datetime;
+
+    @Column(nullable = false)
+    private LocalDateTime updated_datetime;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Answer> answers = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "correct_answer_id", referencedColumnName = "id")
+    private Answer correctAnswer;
+
+    @PrePersist
+    protected void onCreate(){
+        this.created_datetime = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected void onUpdate(){
+        this.updated_datetime = LocalDateTime.now();
+    }
+
+
+}
