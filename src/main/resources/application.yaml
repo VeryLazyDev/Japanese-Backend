@@ -13,10 +13,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
       show-sql: true
-
-
+  mvc:
+    apiVersion:
+      use:
+        path-segment: 2
+      supported: 1.0
+      default: 1.0
 
 #custom config
 api:
   base:
-    path: japan-app/api
+    path: /japanese-app/api

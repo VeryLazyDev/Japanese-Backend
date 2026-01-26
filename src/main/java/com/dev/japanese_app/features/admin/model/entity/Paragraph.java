@@ -23,7 +23,8 @@ public class Paragraph {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String paragraph;
 
     @Enumerated(EnumType.STRING)
@@ -35,7 +36,7 @@ public class Paragraph {
     @Column(nullable = false,updatable = false)
     private LocalDateTime created_datetime;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime updated_datetime;
 
     @OneToMany(mappedBy = "paragraph", cascade = CascadeType.ALL,fetch = FetchType.LAZY)

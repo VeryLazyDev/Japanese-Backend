@@ -20,7 +20,8 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
 
     @ManyToOne
@@ -36,9 +37,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Answer> answers = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(name = "correct_answer_id", referencedColumnName = "id")
-    private Answer correctAnswer;
+//    @OneToOne
+//    @JoinColumn(name = "correct_answer_id", referencedColumnName = "id")
+//    private Answer correctAnswer;
 
     @PrePersist
     protected void onCreate(){
