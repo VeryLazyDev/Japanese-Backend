@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -19,6 +19,10 @@ spring:
         path-segment: 2
       supported: 1.0
       default: 1.0
+#logging:
+#  level:
+#    org.springframework.web: TRACE
+#    org.springframework.security: TRACE
 
 #custom config
 api:
