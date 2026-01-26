@@ -13,6 +13,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
       show-sql: true
+  #hibernate
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+      minimun-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+      pool-name: JP-HikariPool
   mvc:
     apiVersion:
       use:
