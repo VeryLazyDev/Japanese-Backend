@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +19,6 @@ public class ParagraphService {
 
     private final ParagraphRepository paragraphRepository;
     private final ParagraphMapper paragraphMapper;
-    private final QuestionMapper questionMapper;
 
     @Transactional
     public ApiResponse<?> createParagraph(ParagraphRequest paragraphRequest, HttpServletRequest request) {
@@ -42,8 +39,8 @@ public class ParagraphService {
     }
 
     @Transactional(readOnly = true)
-    public ApiResponse<ParagraphResponse> getParagraphById(Long id) {
-        Paragraph paragraph = paragraphRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Paragraph not found with id : " + id));
+    public ApiResponse<ParagraphResponse> getParagraphById(Long id, HttpServletRequest request) {
+        Paragraph paragraph = paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id : " + id));
         ParagraphResponse response = paragraphMapper.toResponseDto(paragraph);
         return ApiResponse.<ParagraphResponse>builder()
                 .success(true)

@@ -36,6 +36,7 @@ public class Paragraph {
     @Column(nullable = false,updatable = false)
     private LocalDateTime created_datetime;
 
+    @Column(nullable = true)
     private LocalDateTime updated_datetime;
 
     @OneToMany(mappedBy = "paragraph", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
