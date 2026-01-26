@@ -20,7 +20,6 @@ public class ParagraphController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createParagraph(@Validated(Create.class) @RequestBody ParagraphRequest paragraphRequest, HttpServletRequest request) {
-        System.err.println("call post");
         return ResponseUtils.buildResponseEntity(
                 paragraphService.createParagraph(paragraphRequest, request),
                 request
@@ -29,8 +28,6 @@ public class ParagraphController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getParagraphById(@PathVariable Long id, HttpServletRequest request) {
-
-        System.err.println("call get");
         return ResponseUtils.buildResponseEntity(
                 paragraphService.getParagraphById(id, request),
                 request
