@@ -24,7 +24,16 @@ spring:
 #    org.springframework.web: TRACE
 #    org.springframework.security: TRACE
 
+# swagger config
+springdoc:
+  swagger-ui:
+    path: ${swagger.base.path}/v1/api-docs
+  api-docs:
+    path: ${swagger.base.path}/v1
 #custom config
 api:
   base:
     path: /japanese-app/api
+swagger:
+  base:
+    path: /japanese-app/swagger
