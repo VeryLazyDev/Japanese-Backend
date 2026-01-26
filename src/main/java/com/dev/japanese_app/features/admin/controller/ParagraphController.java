@@ -1,11 +1,19 @@
 package com.dev.japanese_app.features.admin.controller;
 
+import com.dev.japanese_app.common.constant.JapaneseLevel;
+import com.dev.japanese_app.common.constant.ParagraphType;
 import com.dev.japanese_app.common.model.Create;
 import com.dev.japanese_app.common.utils.ResponseUtils;
 import com.dev.japanese_app.features.admin.model.reqeust.ParagraphRequest;
 import com.dev.japanese_app.features.admin.service.ParagraphService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +40,38 @@ public class ParagraphController {
                 paragraphService.getParagraphById(id, request),
                 request
         );
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllParagraph(
+            @RequestParam(name = "size", defaultValue = "10")
+            @Min(0) Integer size,
+
+            @RequestParam(name = "page", defaultValue = "0")
+            @Min(0) Integer page,
+
+            @RequestParam(name = "keyword", required = false)
+            String keyword,
+
+            @Parameter(description = "Japanese Level filter (Optional)")
+            @RequestParam(name = "level", required = false)
+            JapaneseLevel japaneseLevel,
+
+            @Parameter(description = "Paragraph filter (Optional)")
+            @RequestParam(name = "paragraphType", required = false)
+            ParagraphType paragraphType,
+
+            @RequestParam(name = "sortField", defaultValue = "id")
+            @Pattern(regexp = "^(id|paragraph)$", message = "Invalid column name")
+            String sortField,
+
+            @RequestParam(name = "sortOrder", defaultValue = "desc", required = false)
+            String sortOrder,
+
+            HttpServletRequest request
+    ) {
+        Sort sort = "desc".equalsIgnoreCase(sortOrder) ? Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return ResponseUtils.buildResponseEntity(paragraphService.getAllParagraph(keyword, japaneseLevel,paragraphType, pageable, request),request);
     }
 }
