@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,19 +23,29 @@ public class Question {
     @Column(nullable = false)
     private String question;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_paragraph_id", referencedColumnName = "id")
+    private Paragraph paragraph;
+
     @Column(nullable = false,updatable = false)
     private LocalDateTime created_datetime;
 
     @Column(nullable = false)
     private LocalDateTime updated_datetime;
 
-    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "question_id")
-    private Set<Answer> answerList;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Answer> answers = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "correct_answer_id", referencedColumnName = "id")
+    private Answer correctAnswer;
 
     @PrePersist
     protected void onCreate(){
         this.created_datetime = LocalDateTime.now();
+    }
+    @PreUpdate
+    protected void onUpdate(){
         this.updated_datetime = LocalDateTime.now();
     }
 

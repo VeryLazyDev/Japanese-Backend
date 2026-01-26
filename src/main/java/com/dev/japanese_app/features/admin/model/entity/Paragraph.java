@@ -38,13 +38,16 @@ public class Paragraph {
     @Column(nullable = false)
     private LocalDateTime updated_datetime;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "paragraph_id")
+    @OneToMany(mappedBy = "paragraph", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Question> questionsList;
 
     @PrePersist
     protected void onCreate(){
         this.created_datetime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void onUpdate(){
         this.updated_datetime = LocalDateTime.now();
     }
 

@@ -21,4 +21,8 @@ public class Answer {
     @Column(nullable = false)
     private Boolean correct_answer;
 
+    @OneToOne
+    @JoinColumn(name = "fk_question_id", referencedColumnName = "id")
+    private Question question;
+
 }
