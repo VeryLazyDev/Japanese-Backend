@@ -20,7 +20,8 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
 
     @ManyToOne
