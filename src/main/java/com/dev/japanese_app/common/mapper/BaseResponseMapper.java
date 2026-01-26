@@ -1,12 +1,27 @@
 package com.dev.japanese_app.common.mapper;
 
-public interface BaseResponseMapper<E, D> {
+import java.util.Collections;
+import java.util.List;
 
-    default void validate(E entity){
+public interface BaseResponseMapper<E, D, R> {
+    /*
+     *  E = Entity, D = Response DTO, R = Request DTO
+     * */
+    default void validate(E entity) {
         if (entity == null) throw new IllegalArgumentException("Entity must not be null");
     }
-    default D toDto(E entity){
-        throw new UnsupportedOperationException("toDto not implemented");
-    }
 
+    /*
+    * Entity to Response
+    * */
+    D toResponseDto(E entity);
+    /*
+    * Request DTO to Entity
+    * */
+    E toEntity(R request);
+
+    default List<D> toResponseList(List<E> entities) {
+        if (entities == null) return Collections.emptyList();
+        return entities.stream().map(this::toResponseDto).toList();
+    }
 }
