@@ -50,6 +50,17 @@ public class ParagraphService {
                 .content(paragraphMapper.toResponseDto(paragraph))
                 .build();
     }
+    @Transactional
+    public ApiResponse<?> deleteParagraph(Long id, HttpServletRequest request){
+        paragraphRepository.findById(id).orElseThrow(()-> new RuntimeException("Paragraph not found with id " + id));
+        paragraphRepository.deleteById(id);
+        return ApiResponse.builder()
+                .success(true)
+                .code(204)
+                .message("Paragraph is deleted successfully!!")
+                .content(null)
+                .build();
+    }
 
     @Transactional(readOnly = true)
     public ApiResponse<ParagraphResponse> getParagraphById(Long id, HttpServletRequest request) {
