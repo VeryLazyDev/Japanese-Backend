@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "${api.base.path}/v{version}/admin", version = "1")
+@RequestMapping("${api.base.path}/v1/admin")
 @RequiredArgsConstructor
 public class UserController {
 

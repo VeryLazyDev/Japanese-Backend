@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "${api.base.path}/v{version}/paragraph", version = "1")
+@RequestMapping("${api.base.path}/v1/paragraph")
 @RequiredArgsConstructor
 public class ParagraphController {
 
