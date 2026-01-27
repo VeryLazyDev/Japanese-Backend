@@ -2,6 +2,7 @@ package com.dev.japanese_app.features.admin.controller;
 
 import com.dev.japanese_app.common.constant.JapaneseLevel;
 import com.dev.japanese_app.common.constant.ParagraphType;
+import com.dev.japanese_app.common.model.ApiResponse;
 import com.dev.japanese_app.common.model.Create;
 import com.dev.japanese_app.common.utils.ResponseUtils;
 import com.dev.japanese_app.features.admin.model.reqeust.ParagraphRequest;
@@ -42,6 +43,14 @@ public class ParagraphController {
         );
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteParagraphById(@PathVariable Long id, HttpServletRequest request){
+        return ResponseUtils.buildResponseEntity(
+                paragraphService.deleteParagraph(id, request),
+                request
+        );
+    }
+
     @GetMapping("/all")
     public ResponseEntity<?> getAllParagraph(
             @RequestParam(name = "size", defaultValue = "10")
@@ -74,4 +83,6 @@ public class ParagraphController {
         Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseUtils.buildResponseEntity(paragraphService.getAllParagraph(keyword, japaneseLevel,paragraphType, pageable, request),request);
     }
+
+
 }
