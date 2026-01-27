@@ -68,12 +68,13 @@ jobs:
             docker stop muda-zero-app || true
             docker rm muda-zero-app || true
             docker run -d \
-            --name muda-zero-app
-            -e SPRING_PROFILES_ACTIVE=dev \
-            -e DB_URL=${{ secrets.DB_URL }} \
-            -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            ${{ secrets.DOCKERHUB_USERNAME }}/muda-zero:latest
+              --name muda-zero-app \
+              -p 8080:8080 \
+              -e SPRING_PROFILES_ACTIVE=dev \
+              -e DB_URL="${{ secrets.DB_URL }}" \
+              -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
+              -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+              ${{ secrets.DOCKERHUB_USERNAME }}/muda-zero:latest
 
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
