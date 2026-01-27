@@ -38,8 +38,8 @@ spring:
 springdoc:
   swagger-ui:
     path: ${swagger.base.path}/v1/api-docs
-  api-docs:
-    path: ${swagger.base.path}/v1
+#  api-docs:
+#    path: ${swagger.base.path}/v1
 #custom config
 api:
   base:
