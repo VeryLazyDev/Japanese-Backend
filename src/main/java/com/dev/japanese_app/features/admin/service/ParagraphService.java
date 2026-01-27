@@ -46,10 +46,23 @@ public class ParagraphService {
         return ApiResponse.builder()
                 .success(true)
                 .code(201)
-                .message("Paragraph create successfully!!")
+                .message("Paragraph is created successfully!!")
                 .content(paragraphMapper.toResponseDto(paragraph))
                 .build();
     }
+
+    @Transactional
+    public ApiResponse<?> updateParagraphById(Long id,ParagraphRequest paragraphRequest, HttpServletRequest request){
+        paragraphRepository.findById(id).orElseThrow(()-> new RuntimeException("Paragraph not found with id "+ id));
+        Paragraph savedParagraph = paragraphMapper.toEntity(paragraphRequest);
+        return ApiResponse.builder()
+                .success(true)
+                .code(202)
+                .message("Paragraph is updated successfully!!")
+                .content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph)))
+                .build();
+    }
+
     @Transactional
     public ApiResponse<?> deleteParagraph(Long id, HttpServletRequest request){
         paragraphRepository.findById(id).orElseThrow(()-> new RuntimeException("Paragraph not found with id " + id));
