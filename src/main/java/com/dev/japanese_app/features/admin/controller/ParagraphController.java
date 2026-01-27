@@ -4,6 +4,7 @@ import com.dev.japanese_app.common.constant.JapaneseLevel;
 import com.dev.japanese_app.common.constant.ParagraphType;
 import com.dev.japanese_app.common.model.ApiResponse;
 import com.dev.japanese_app.common.model.Create;
+import com.dev.japanese_app.common.model.Update;
 import com.dev.japanese_app.common.utils.ResponseUtils;
 import com.dev.japanese_app.features.admin.model.reqeust.ParagraphRequest;
 import com.dev.japanese_app.features.admin.service.ParagraphService;
@@ -42,6 +43,15 @@ public class ParagraphController {
                 request
         );
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateParagraphByID(@Validated(Update.class) @RequestBody ParagraphRequest paragraphRequest, @PathVariable Long id, HttpServletRequest request){
+        return ResponseUtils.buildResponseEntity(
+                paragraphService.updateParagraphById(id, paragraphRequest, request),
+                request
+        );
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteParagraphById(@PathVariable Long id, HttpServletRequest request){
