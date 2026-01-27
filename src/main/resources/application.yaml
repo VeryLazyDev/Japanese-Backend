@@ -23,12 +23,12 @@ spring:
       max-lifetime: 1800000
       auto-commit: true
       pool-name: JP-HikariPool
-  mvc:
-    apiVersion:
-      use:
-        path-segment: 2
-      supported: 1.0
-      default: 1.0
+#  mvc:
+#    apiVersion:
+#      use:
+#        path-segment: 2
+#      supported: 1.0
+#      default: 1.0
 #logging:
 #  level:
 #    org.springframework.web: TRACE
