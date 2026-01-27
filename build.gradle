@@ -8,6 +8,14 @@ group = 'com.dev'
 version = '0.0.1-SNAPSHOT'
 description = 'Demo project for Spring Boot'
 
+bootJar {
+    archiveFileName = "mudra-zero.jar"
+}
+
+jar {
+    enabled = false
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
