@@ -1,4 +1,4 @@
-package com.dev.japanese_app.security.jwt;
+package com.dev.japanese_app.middleware.jwt;
 
 import org.springframework.stereotype.Component;
 
