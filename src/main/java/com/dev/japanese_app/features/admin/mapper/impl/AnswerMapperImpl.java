@@ -20,6 +20,10 @@ public class AnswerMapperImpl implements AnswerMapper {
 
     @Override
     public Answer toEntity(AnswerRequest request) {
-        return null;
+        if (request == null) throw new RuntimeException("Request Object is null");
+        return Answer.builder()
+                .answer(request.getAnswer())
+                .correct_answer(request.getCorrect_answer())
+                .build();
     }
 }

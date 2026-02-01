@@ -1,9 +1,7 @@
 package com.dev.japanese_app.features.admin.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -12,9 +10,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "questions")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,6 @@ public class Question {
     @Column(nullable = false,updatable = false)
     private LocalDateTime created_datetime;
 
-    @Column(nullable = false)
     private LocalDateTime updated_datetime;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)

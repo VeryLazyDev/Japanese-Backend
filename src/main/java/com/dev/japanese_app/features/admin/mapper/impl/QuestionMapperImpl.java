@@ -16,13 +16,11 @@ import java.util.HashSet;
 public class QuestionMapperImpl implements QuestionMapper {
 
     private final AnswerMapper answerMapper;
+
     @Override
     public QuestionResponse toResponseDto(Question entity) {
         QuestionMapper.super.validate(entity);
-        return QuestionResponse.builder()
-                .id(entity.getId())
-                .question(entity.getQuestion())
-                .answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswers()))))
+        return QuestionResponse.builder().id(entity.getId()).question(entity.getQuestion()).answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswers()))))
 //                .correctAnswerId(entity.getCorrectAnswer().getId())
                 .build();
     }
@@ -30,6 +28,8 @@ public class QuestionMapperImpl implements QuestionMapper {
     @Override
     public Question toEntity(QuestionRequest request) {
         if (request == null) throw new RuntimeException("Request Object is null");
-        return null;
+        return Question.builder()
+                .question(request.getQuestion())
+                .build();
     }
 }
