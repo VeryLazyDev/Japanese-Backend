@@ -3,10 +3,7 @@ package com.dev.japanese_app.features.admin.model.entity;
 import com.dev.japanese_app.common.constant.JapaneseLevel;
 import com.dev.japanese_app.common.constant.ParagraphType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +11,8 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "reading_paragraph")
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Paragraph {
