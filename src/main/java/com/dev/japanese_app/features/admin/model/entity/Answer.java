@@ -2,6 +2,7 @@ package com.dev.japanese_app.features.admin.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class Answer {
     @Column(nullable = false)
     private Boolean correct_answer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_question_id", referencedColumnName = "id")
     private Question question;
 

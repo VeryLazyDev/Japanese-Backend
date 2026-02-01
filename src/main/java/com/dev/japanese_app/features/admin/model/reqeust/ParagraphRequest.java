@@ -4,11 +4,14 @@ import com.dev.japanese_app.common.constant.JapaneseLevel;
 import com.dev.japanese_app.common.constant.ParagraphType;
 import com.dev.japanese_app.common.model.Create;
 import com.dev.japanese_app.common.model.Update;
+import com.dev.japanese_app.features.admin.model.entity.Question;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,4 +30,7 @@ public class ParagraphRequest {
 
     @NotNull(groups = {Update.class, Create.class}, message = "japaneseLevel must not be null")
     private JapaneseLevel japaneseLevel;
+
+    @NotNull(groups = {Update.class, Create.class}, message = "japaneseLevel must not be null")
+    private List<Question> questionList;
 }

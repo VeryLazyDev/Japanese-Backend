@@ -22,14 +22,19 @@ public class QuestionMapperImpl implements QuestionMapper {
         return QuestionResponse.builder()
                 .id(entity.getId())
                 .question(entity.getQuestion())
-                .answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswers()))))
-//                .correctAnswerId(entity.getCorrectAnswer().getId())
+                .createdDatetime(entity.getCreated_datetime())
+                .updatedDateTime(entity.getUpdated_datetime())
+                .answerList(answerMapper.toResponseList(entity.getAnswerList()))
+//                .answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswerSet()))))
                 .build();
     }
 
     @Override
     public Question toEntity(QuestionRequest request) {
         if (request == null) throw new RuntimeException("Request Object is null");
-        return null;
+        return Question.builder()
+                .question(request.getQuestion())
+                .answerList(request.getAnswerList())
+                .build();
     }
 }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,6 +16,11 @@ import java.util.Set;
 public class QuestionResponse {
     private Long id;
     private String question;
-    private Set<AnswerResponse> answerList;
-    private Long correctAnswerId;
+
+//    private Set<AnswerResponse> answerList;
+
+    private LocalDateTime createdDatetime;
+    private LocalDateTime updatedDateTime;
+    private List<AnswerResponse> answerList;
+//    private Long correctAnswerId;
 }
