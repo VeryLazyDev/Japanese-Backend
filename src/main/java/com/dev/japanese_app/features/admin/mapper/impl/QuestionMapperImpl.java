@@ -22,7 +22,7 @@ public class QuestionMapperImpl implements QuestionMapper {
                 .question(entity.getQuestion())
                 .createdDatetime(entity.getCreated_datetime())
                 .updatedDateTime(entity.getUpdated_datetime())
-                .answerList(answerMapper.toResponseList(entity.getAnswerList()))
+                .answerList(answerMapper.toResponseList(entity.getAnswers()))
 //                .answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswerSet()))))
                 .build();
     }
@@ -32,7 +32,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         if (request == null) throw new RuntimeException("Request Object is null");
         return Question.builder()
                 .question(request.getQuestion())
-                .answerList(request.getAnswerList().stream().map(answerMapper::toEntity).toList())
+                .answers(request.getAnswerList().stream().map(answerMapper::toEntity).toList())
                 .build();
     }
 }

@@ -5,7 +5,6 @@ import com.dev.japanese_app.common.constant.ParagraphType;
 import com.dev.japanese_app.common.model.ApiResponse;
 import com.dev.japanese_app.common.utils.PaginationUtils;
 import com.dev.japanese_app.features.admin.mapper.ParagraphMapper;
-import com.dev.japanese_app.features.admin.mapper.QuestionMapper;
 import com.dev.japanese_app.features.admin.model.entity.Paragraph;
 import com.dev.japanese_app.features.admin.model.entity.Question;
 import com.dev.japanese_app.features.admin.model.reponse.ParagraphResponse;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Arrays.stream;
-
 
 @Service
 @RequiredArgsConstructor
@@ -41,57 +38,36 @@ public class ParagraphService {
         //  VALIDATION SECTION
         /**/
         Paragraph savedParagraph = paragraphMapper.toEntity(paragraphRequest);
-        if (savedParagraph.getQuestionList()!=null){
+        if (savedParagraph.getQuestionList() != null) {
             savedParagraph.getQuestionList().forEach((Question question) -> {
-                        question.setParagraph(savedParagraph);
-                        if (question.getAnswerList()!=null){
-                            question.getAnswerList().forEach(answer -> answer.setQuestion(question));
-                        }
-                    }
-            );
+                question.setParagraph(savedParagraph);
+                if (question.getAnswers() != null) {
+                    question.getAnswers().forEach(answer -> answer.setQuestion(question));
+                }
+            });
         }
-        return ApiResponse.builder()
-                .success(true)
-                .code(201)
-                .message("Paragraph is created successfully!!")
-                .content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph)))
-                .build();
+        return ApiResponse.builder().success(true).code(201).message("Paragraph is created successfully!!").content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph))).build();
     }
 
     @Transactional
-    public ApiResponse<?> updateParagraphById(Long id,ParagraphRequest paragraphRequest, HttpServletRequest request){
-        paragraphRepository.findById(id).orElseThrow(()-> new RuntimeException("Paragraph not found with id "+ id));
+    public ApiResponse<?> updateParagraphById(Long id, ParagraphRequest paragraphRequest, HttpServletRequest request) {
+        paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id " + id));
         Paragraph savedParagraph = paragraphMapper.toEntity(paragraphRequest);
-        return ApiResponse.builder()
-                .success(true)
-                .code(202)
-                .message("Paragraph is updated successfully!!")
-                .content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph)))
-                .build();
+        return ApiResponse.builder().success(true).code(202).message("Paragraph is updated successfully!!").content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph))).build();
     }
 
     @Transactional
-    public ApiResponse<?> deleteParagraph(Long id, HttpServletRequest request){
-        paragraphRepository.findById(id).orElseThrow(()-> new RuntimeException("Paragraph not found with id " + id));
+    public ApiResponse<?> deleteParagraph(Long id, HttpServletRequest request) {
+        paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id " + id));
         paragraphRepository.deleteById(id);
-        return ApiResponse.builder()
-                .success(true)
-                .code(204)
-                .message("Paragraph is deleted successfully!!")
-                .content(null)
-                .build();
+        return ApiResponse.builder().success(true).code(204).message("Paragraph is deleted successfully!!").content(null).build();
     }
 
     @Transactional(readOnly = true)
     public ApiResponse<ParagraphResponse> getParagraphById(Long id, HttpServletRequest request) {
         Paragraph paragraph = paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id : " + id));
         ParagraphResponse response = paragraphMapper.toResponseDto(paragraph);
-        return ApiResponse.<ParagraphResponse>builder()
-                .success(true)
-                .code(200)
-                .message("Paragraph that equals by id " + id)
-                .content(response)
-                .build();
+        return ApiResponse.<ParagraphResponse>builder().success(true).code(200).message("Paragraph that equals by id " + id).content(response).build();
     }
 
     @Transactional(readOnly = true)
@@ -100,14 +76,8 @@ public class ParagraphService {
             List<Predicate> predicateList = new ArrayList<>();
             // keyword filter
             if (keyword != null && !keyword.isEmpty()) {
-            String likePattern = "%" + keyword.toLowerCase() + "%";
-                predicateList.add(
-                        cb.or(
-                                cb.like(root.get("paragraph"), likePattern),
-                                cb.like(root.get("level"), likePattern),
-                                cb.like(root.get("paragraphType"), likePattern)
-                        )
-                );
+                String likePattern = "%" + keyword.toLowerCase() + "%";
+                predicateList.add(cb.or(cb.like(root.get("paragraph"), likePattern), cb.like(root.get("level"), likePattern), cb.like(root.get("paragraphType"), likePattern)));
             }
             // level filter
             if (level != null) {
@@ -124,18 +94,9 @@ public class ParagraphService {
         Page<Paragraph> paragraphPage = paragraphRepository.findAll(specs, pageable);
         // define pagination metadata
         Map<String, Object> paginationMetaData = PaginationUtils.buildPaginationMetaData(paragraphPage);
-        List<ParagraphResponse> paragraphResponseList = paragraphPage
-                .stream()
-                .map(paragraphMapper::toResponseDto)
-                .toList();
+        List<ParagraphResponse> paragraphResponseList = paragraphPage.stream().map(paragraphMapper::toResponseDto).toList();
 
-        return ApiResponse.<List<ParagraphResponse>>builder()
-                .success(true)
-                .code(200)
-                .message("paragraph list retrieved successfully !!")
-                .content(paragraphResponseList)
-                .metadata(paginationMetaData)
-                .build();
+        return ApiResponse.<List<ParagraphResponse>>builder().success(true).code(200).message("paragraph list retrieved successfully !!").content(paragraphResponseList).metadata(paginationMetaData).build();
     }
 
 }
