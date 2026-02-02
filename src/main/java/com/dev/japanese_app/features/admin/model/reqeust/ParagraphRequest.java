@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +29,7 @@ public class ParagraphRequest {
 
     @NotNull(groups = {Update.class, Create.class}, message = "japaneseLevel must not be null")
     private JapaneseLevel japaneseLevel;
+
+    @NotNull(groups = {Update.class, Create.class}, message = "questions list must not be null")
+    private List<QuestionRequest> questionList;
 }

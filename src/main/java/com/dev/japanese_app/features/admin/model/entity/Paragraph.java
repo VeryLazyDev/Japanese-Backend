@@ -38,7 +38,7 @@ public class Paragraph {
     private LocalDateTime updated_datetime;
 
     @OneToMany(mappedBy = "paragraph", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Question> questionsList;
+    private List<Question> questionList;
 
     @PrePersist
     protected void onCreate(){

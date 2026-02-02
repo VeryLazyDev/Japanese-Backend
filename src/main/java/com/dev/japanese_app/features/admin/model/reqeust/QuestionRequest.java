@@ -1,11 +1,15 @@
 package com.dev.japanese_app.features.admin.model.reqeust;
 
+import com.dev.japanese_app.common.model.Create;
+import com.dev.japanese_app.common.model.Update;
+import com.dev.japanese_app.features.admin.model.entity.Answer;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -13,10 +17,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class QuestionRequest {
-    @NotNull( message = "question must not be null")
+    @NotNull(groups = Update.class,message = "question id must not be null.")
+    private Long id;
+
+    @NotNull(groups = {Update.class, Create.class}, message = "question must not be null")
     private String question;
 
-    @NotNull(message = "answer lists must not be null")
-    @Size(min = 2, max = 5, message = "the numbers of answer must be between 2 and 5")
-    private Set<AnswerRequest> answerList;
+    @NotNull(groups = {Update.class, Create.class}, message = "answers list must not be null")
+    private List<AnswerRequest> answerList;
+//    private Set<Answer> answerSet;
 }

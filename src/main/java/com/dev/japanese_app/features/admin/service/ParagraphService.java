@@ -7,6 +7,7 @@ import com.dev.japanese_app.common.utils.PaginationUtils;
 import com.dev.japanese_app.features.admin.mapper.ParagraphMapper;
 import com.dev.japanese_app.features.admin.mapper.QuestionMapper;
 import com.dev.japanese_app.features.admin.model.entity.Paragraph;
+import com.dev.japanese_app.features.admin.model.entity.Question;
 import com.dev.japanese_app.features.admin.model.reponse.ParagraphResponse;
 import com.dev.japanese_app.features.admin.model.reqeust.ParagraphRequest;
 import com.dev.japanese_app.features.admin.repo.ParagraphRepository;
@@ -39,15 +40,21 @@ public class ParagraphService {
         /*check user is valid or not from access token*/
         //  VALIDATION SECTION
         /**/
-
-        Paragraph paragraph = paragraphRepository.save(
-                paragraphMapper.toEntity(paragraphRequest)
-        );
+        Paragraph savedParagraph = paragraphMapper.toEntity(paragraphRequest);
+        if (savedParagraph.getQuestionList()!=null){
+            savedParagraph.getQuestionList().forEach((Question question) -> {
+                        question.setParagraph(savedParagraph);
+                        if (question.getAnswerList()!=null){
+                            question.getAnswerList().forEach(answer -> answer.setQuestion(question));
+                        }
+                    }
+            );
+        }
         return ApiResponse.builder()
                 .success(true)
                 .code(201)
                 .message("Paragraph is created successfully!!")
-                .content(paragraphMapper.toResponseDto(paragraph))
+                .content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph)))
                 .build();
     }
 

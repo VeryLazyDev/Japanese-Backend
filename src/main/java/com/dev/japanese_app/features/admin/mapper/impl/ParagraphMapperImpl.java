@@ -21,7 +21,7 @@ public class ParagraphMapperImpl implements ParagraphMapper {
                 .paragraph(entity.getParagraph())
                 .paragraphType(entity.getParagraphType())
                 .level(entity.getLevel())
-                .questionList(questionMapper.toResponseList(entity.getQuestionsList()))
+                .questionList(questionMapper.toResponseList(entity.getQuestionList()))
                 .createdDatetime(entity.getCreated_datetime())
                 .updatedDateTime(entity.getUpdated_datetime())
                 .build();
@@ -34,6 +34,7 @@ public class ParagraphMapperImpl implements ParagraphMapper {
                 .paragraph(request.getParagraph())
                 .paragraphType(request.getParagraphType())
                 .level(request.getJapaneseLevel())
+                .questionList(request.getQuestionList().stream().map(questionMapper::toEntity).toList())
                 .build();
     }
 }

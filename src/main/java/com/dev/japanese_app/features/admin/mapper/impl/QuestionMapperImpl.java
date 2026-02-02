@@ -8,9 +8,6 @@ import com.dev.japanese_app.features.admin.model.reqeust.QuestionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 @Component
 @RequiredArgsConstructor
 public class QuestionMapperImpl implements QuestionMapper {
@@ -20,8 +17,13 @@ public class QuestionMapperImpl implements QuestionMapper {
     @Override
     public QuestionResponse toResponseDto(Question entity) {
         QuestionMapper.super.validate(entity);
-        return QuestionResponse.builder().id(entity.getId()).question(entity.getQuestion()).answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswers()))))
-//                .correctAnswerId(entity.getCorrectAnswer().getId())
+        return QuestionResponse.builder()
+                .id(entity.getId())
+                .question(entity.getQuestion())
+                .createdDatetime(entity.getCreated_datetime())
+                .updatedDateTime(entity.getUpdated_datetime())
+                .answerList(answerMapper.toResponseList(entity.getAnswerList()))
+//                .answerList(new HashSet<>(answerMapper.toResponseList(new ArrayList<>(entity.getAnswerSet()))))
                 .build();
     }
 
@@ -30,6 +32,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         if (request == null) throw new RuntimeException("Request Object is null");
         return Question.builder()
                 .question(request.getQuestion())
+                .answerList(request.getAnswerList().stream().map(answerMapper::toEntity).toList())
                 .build();
     }
 }
