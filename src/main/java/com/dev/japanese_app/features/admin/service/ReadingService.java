@@ -37,21 +37,21 @@ public class ReadingService {
                 .map(qReq -> {
                     Question question = questionMapper.toEntity(qReq);
                     question.setParagraph(paragraph);
-                    Set<Answer> answerList = qReq.getAnswerList()
+                    List<Answer> answerList = qReq.getAnswerList()
                             .stream()
                             .map(aReq -> {
                                 Answer answer = answerMapper.toEntity(aReq);
                                 answer.setQuestion(question);
                                 return answer;
                             })
-                            .collect(Collectors.toSet());
+                            .collect(Collectors.toList());
                     question.setAnswers(answerList);
 
                     return question;
                 })
                 .toList();
 
-        paragraph.setQuestionsList(questionList);
+        paragraph.setQuestionList(questionList);
 
         Paragraph saved = readingRepo.save(paragraph);
 
