@@ -2,13 +2,10 @@ package com.dev.japanese_app.features.admin.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,7 +13,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,19 +29,10 @@ public class Question {
     @Column(nullable = false,updatable = false)
     private LocalDateTime created_datetime;
 
-    @Column(nullable = true)
     private LocalDateTime updated_datetime;
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Answer> answerSet = new HashSet<>();
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Answer> answerList;
-
-    //OneToOne Relation
-//    @OneToOne
-//    @JoinColumn(name = "correct_answer_id", referencedColumnName = "id")
-//    private Answer correctAnswer;
+    private Set<Answer> answers = new HashSet<>();
 
     @PrePersist
     protected void onCreate(){

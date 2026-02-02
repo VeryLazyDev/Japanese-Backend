@@ -8,14 +8,12 @@ import com.dev.japanese_app.features.admin.model.reqeust.QuestionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 @Component
 @RequiredArgsConstructor
 public class QuestionMapperImpl implements QuestionMapper {
 
     private final AnswerMapper answerMapper;
+
     @Override
     public QuestionResponse toResponseDto(Question entity) {
         QuestionMapper.super.validate(entity);
