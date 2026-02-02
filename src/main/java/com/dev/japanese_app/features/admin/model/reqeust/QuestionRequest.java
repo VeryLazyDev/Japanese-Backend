@@ -23,7 +23,7 @@ public class QuestionRequest {
     @NotNull(groups = {Update.class, Create.class}, message = "question must not be null")
     private String question;
 
-    @NotNull(groups = {Update.class, Create.class}, message = "japaneseLevel must not be null")
-    private List<Answer> answerList;
+    @NotNull(groups = {Update.class, Create.class}, message = "answers list must not be null")
+    private List<AnswerRequest> answerList;
 //    private Set<Answer> answerSet;
 }

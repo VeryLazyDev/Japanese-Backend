@@ -28,6 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
         for (String urlPattern : SecurityConstants.WHITE_LISTS_URL) {
             if (antPathMatcher.match(urlPattern, request.getRequestURI())){
                 filterChain.doFilter(request,response);
+                return;
             }
         }
         filterChain.doFilter(request,response);

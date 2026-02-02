@@ -34,7 +34,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         if (request == null) throw new RuntimeException("Request Object is null");
         return Question.builder()
                 .question(request.getQuestion())
-                .answerList(request.getAnswerList())
+                .answerList(request.getAnswerList().stream().map(answerMapper::toEntity).toList())
                 .build();
     }
 }

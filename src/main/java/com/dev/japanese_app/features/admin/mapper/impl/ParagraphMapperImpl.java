@@ -34,7 +34,7 @@ public class ParagraphMapperImpl implements ParagraphMapper {
                 .paragraph(request.getParagraph())
                 .paragraphType(request.getParagraphType())
                 .level(request.getJapaneseLevel())
-                .questionList(request.getQuestionList())
+                .questionList(request.getQuestionList().stream().map(questionMapper::toEntity).toList())
                 .build();
     }
 }
