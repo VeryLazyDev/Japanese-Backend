@@ -15,7 +15,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfiguration(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://locahost:5173/", "https://api-muda-zero.nyinyimyintmyat.com/","https://motto.kageclothing.shop/"));
+        corsConfiguration.setAllowedOrigins(List.of("http://locahost:5173/", "http://api-muda-zero.nyinyimyintmyat.com/","https://api-muda-zero.nyinyimyintmyat.com/","https://motto.kageclothing.shop/"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         corsConfiguration.setAllowCredentials(true);
