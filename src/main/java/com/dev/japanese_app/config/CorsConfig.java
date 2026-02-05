@@ -19,7 +19,8 @@ public class CorsConfig {
                 "http://localhost:5173",
                 "https://api-muda-zero.nyinyimyintmyat.com",
                 "http://api-muda-zero.nyinyimyintmyat.com",
-                "https://motto.kageclothing.shop"
+                "https://motto.kageclothing.shop",
+                "https://motto.phyoheinko.com/"
         ));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
