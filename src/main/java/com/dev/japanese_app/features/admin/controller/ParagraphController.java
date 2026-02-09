@@ -2,13 +2,19 @@ package com.dev.japanese_app.features.admin.controller;
 
 import com.dev.japanese_app.common.constant.JapaneseLevel;
 import com.dev.japanese_app.common.constant.ParagraphType;
-import com.dev.japanese_app.common.model.ApiResponse;
 import com.dev.japanese_app.common.model.Create;
 import com.dev.japanese_app.common.model.Update;
 import com.dev.japanese_app.common.utils.ResponseUtils;
+import com.dev.japanese_app.features.admin.model.reqeust.AnswerRequest;
 import com.dev.japanese_app.features.admin.model.reqeust.ParagraphRequest;
+import com.dev.japanese_app.features.admin.model.reqeust.QuestionRequest;
 import com.dev.japanese_app.features.admin.service.ParagraphService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
@@ -44,14 +50,29 @@ public class ParagraphController {
         );
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateParagraphByID(@Validated(Update.class) @RequestBody ParagraphRequest paragraphRequest, @PathVariable Long id, HttpServletRequest request){
+    @PutMapping("/update-paragraph/{id}")
+    public ResponseEntity<?> updateParagraphByID( @RequestBody ParagraphRequest paragraphRequest, @PathVariable Long id, HttpServletRequest request){
         return ResponseUtils.buildResponseEntity(
                 paragraphService.updateParagraphById(id, paragraphRequest, request),
                 request
         );
     }
 
+    @PutMapping("/update-question/{id}")
+    public ResponseEntity<?> updateQuestionID(@RequestBody QuestionRequest questionRequest, @PathVariable Long id, HttpServletRequest request){
+        return ResponseUtils.buildResponseEntity(
+                paragraphService.updateQuestionById(id, questionRequest, request),
+                request
+        );
+    }
+
+    @PutMapping("/update-answer/{id}")
+    public ResponseEntity<?> updateAnswerByID(@RequestBody AnswerRequest answerRequest, @PathVariable Long id, HttpServletRequest request){
+        return ResponseUtils.buildResponseEntity(
+                paragraphService.updateAnswerByID(id, answerRequest, request),
+                request
+        );
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteParagraphById(@PathVariable Long id, HttpServletRequest request){
