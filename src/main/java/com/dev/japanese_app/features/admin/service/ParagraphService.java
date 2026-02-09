@@ -85,7 +85,6 @@ public class ParagraphService {
                 .content(answerMapper.toResponseDto(answerRepository.save(savedAnswer))).build();
     }
 
-
     @Transactional
     public ApiResponse<?> deleteParagraph(Long id, HttpServletRequest request) {
         paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id " + id));
