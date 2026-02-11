@@ -3,6 +3,7 @@ package com.dev.japanese_app.features.user.controller;
 import com.dev.japanese_app.common.utils.ResponseUtils;
 import com.dev.japanese_app.features.user.model.reponse.UserResponse;
 import com.dev.japanese_app.features.user.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("${api.base.path}/v1/admin")
 @RequiredArgsConstructor
+@Tag(name = "User Controller", description = "All endpoints for user controller")
 public class UserController {
 
     private final UserService userService;
