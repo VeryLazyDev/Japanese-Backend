@@ -4,12 +4,19 @@ import com.dev.japanese_app.common.constant.JapaneseLevel;
 import com.dev.japanese_app.common.constant.ParagraphType;
 import com.dev.japanese_app.common.model.ApiResponse;
 import com.dev.japanese_app.common.utils.PaginationUtils;
+import com.dev.japanese_app.features.admin.mapper.AnswerMapper;
 import com.dev.japanese_app.features.admin.mapper.ParagraphMapper;
+import com.dev.japanese_app.features.admin.mapper.QuestionMapper;
+import com.dev.japanese_app.features.admin.model.entity.Answer;
 import com.dev.japanese_app.features.admin.model.entity.Paragraph;
 import com.dev.japanese_app.features.admin.model.entity.Question;
 import com.dev.japanese_app.features.admin.model.reponse.ParagraphResponse;
+import com.dev.japanese_app.features.admin.model.reqeust.AnswerRequest;
 import com.dev.japanese_app.features.admin.model.reqeust.ParagraphRequest;
+import com.dev.japanese_app.features.admin.model.reqeust.QuestionRequest;
+import com.dev.japanese_app.features.admin.repo.AnswerRepository;
 import com.dev.japanese_app.features.admin.repo.ParagraphRepository;
+import com.dev.japanese_app.features.admin.repo.QuestionRepository;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +36,11 @@ import java.util.Map;
 public class ParagraphService {
 
     private final ParagraphRepository paragraphRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
     private final ParagraphMapper paragraphMapper;
+    private final QuestionMapper questionMapper;
+    private final AnswerMapper answerMapper;
 
     @Transactional
     public ApiResponse<?> createParagraph(ParagraphRequest paragraphRequest, HttpServletRequest request) {
@@ -51,9 +62,27 @@ public class ParagraphService {
 
     @Transactional
     public ApiResponse<?> updateParagraphById(Long id, ParagraphRequest paragraphRequest, HttpServletRequest request) {
-        paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id " + id));
-        Paragraph savedParagraph = paragraphMapper.toEntity(paragraphRequest);
-        return ApiResponse.builder().success(true).code(202).message("Paragraph is updated successfully!!").content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph))).build();
+        Paragraph savedParagraph = paragraphRepository.findById(id).orElseThrow(() -> new RuntimeException("Paragraph not found with id " + id));
+        savedParagraph.setParagraph(paragraphRequest.getParagraph());
+        savedParagraph.setParagraphType(paragraphRequest.getParagraphType());
+        savedParagraph.setLevel(paragraphRequest.getJapaneseLevel());
+        return ApiResponse.builder().success(true).code(202).message("Paragraph is updated successfully!!")
+                .content(paragraphMapper.toResponseDto(paragraphRepository.save(savedParagraph))).build();
+    }
+    @Transactional
+    public ApiResponse<?> updateQuestionById(Long id, QuestionRequest questionRequest, HttpServletRequest request) {
+        Question savedQuestion = questionRepository.findById(id).orElseThrow(() -> new RuntimeException("Question not found with id " + id));
+        savedQuestion.setQuestion(questionRequest.getQuestion());
+        return ApiResponse.builder().success(true).code(202).message("Question is updated successfully!!")
+                .content(questionMapper.toResponseDto(questionRepository.save(savedQuestion))).build();
+    }
+    @Transactional
+    public ApiResponse<?> updateAnswerByID(Long id, AnswerRequest answerRequest, HttpServletRequest request){
+        Answer savedAnswer = answerRepository.findById(id).orElseThrow((() -> new RuntimeException("Answer not found with id " + id)));
+        savedAnswer.setAnswer(answerRequest.getAnswer());
+        savedAnswer.setCorrect_answer(answerRequest.getCorrect_answer());
+        return ApiResponse.builder().success(true).code(202).message("Answer is updated successfully")
+                .content(answerMapper.toResponseDto(answerRepository.save(savedAnswer))).build();
     }
 
     @Transactional
